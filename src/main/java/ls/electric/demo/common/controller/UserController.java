@@ -3,10 +3,7 @@ package ls.electric.demo.common.controller;
 import ls.electric.demo.common.domain.User;
 import ls.electric.demo.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -16,13 +13,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping()
     public User findByUser(String email){
         return userService.findByUser(email);
     }
 
-    @PostMapping("")
-    public Map<String,Object> save(User user){
-        return userService.registerUser(user);
+    @PostMapping()
+    public void registerUser(User user){
+        userService.registerUser(user);
+    }
+
+    @PutMapping()
+    public void modifyUser(String id, String password){
+        userService.modifyUser(id, password);
+    }
+
+    @DeleteMapping()
+    public void removeUser(String id){
+        userService.removeUser(id);
     }
 }
