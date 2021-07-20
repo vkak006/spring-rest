@@ -1,4 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: ${MONGO_DB}
+      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
