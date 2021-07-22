@@ -19,8 +19,8 @@ node {
     }
 
     stage('deploy') {
-      def resourceGroup = 'ls-electric-demo'
-      def webAppName = 'ls-electronic-service'
+      def resourceGroup = 'ls-electronic-demo'
+      def webAppName = 'ls-electronic-server'
       // login Azure
       withCredentials([usernamePassword(credentialsId: 'AzureServicePrincipal', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
        sh '''
