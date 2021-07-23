@@ -1,7 +1,7 @@
 package ls.electric.demo.common.controller;
 
-import ls.electric.demo.common.domain.CommonResponse;
-import ls.electric.demo.common.domain.ErrorResponse;
+import ls.electric.demo.config.response.CommonResponse;
+import ls.electric.demo.config.response.ErrorResponse;
 import ls.electric.demo.common.domain.User;
 import ls.electric.demo.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

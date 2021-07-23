@@ -1,4 +1,4 @@
-package ls.electric.demo.common.domain;
+package ls.electric.demo.config.response;
 
 import lombok.Data;
 
