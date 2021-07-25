@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Slf4j
@@ -24,10 +24,13 @@ public class UserService {
 
     //select
     public User findByUser(String email){
-        User user = mongoTemplate.findOne(
+        return mongoTemplate.findOne(
                 Query.query(Criteria.where("email").is(email)),
                 User.class);
-        return user;
+    }
+
+    public List<User> findAll(){
+        return mongoTemplate.findAll(User.class);
     }
 
     //insert

@@ -9,13 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value="/api/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
     @GetMapping()
+    public ResponseEntity findAllUser(){
+        return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
 
