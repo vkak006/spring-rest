@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/{id}}")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
 
