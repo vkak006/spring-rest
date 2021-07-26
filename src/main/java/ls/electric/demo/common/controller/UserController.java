@@ -1,7 +1,7 @@
 package ls.electric.demo.common.controller;
 
-import ls.electric.demo.common.domain.CommonResponse;
-import ls.electric.demo.common.domain.ErrorResponse;
+import ls.electric.demo.config.response.CommonResponse;
+import ls.electric.demo.config.response.ErrorResponse;
 import ls.electric.demo.common.domain.User;
 import ls.electric.demo.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value="/api/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping("")
+    public ResponseEntity findAllUser(){
+        return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
+    }
+
+    @GetMapping("/search")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
 
@@ -27,17 +35,17 @@ public class UserController {
         return ResponseEntity.ok().body(new CommonResponse<User>(user));
     }
 
-    @PostMapping()
+    @PostMapping("")
     public void registerUser(User user){
         userService.registerUser(user);
     }
 
-    @PutMapping()
+    @PutMapping("")
     public void modifyUser(String id, String password){
         userService.modifyUser(id, password);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("")
     public void removeUser(String id){
         userService.removeUser(id);
     }
