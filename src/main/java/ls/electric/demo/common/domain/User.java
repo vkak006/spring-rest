@@ -14,8 +14,20 @@ import java.util.Date;
 public class User {
     @Id
     private String id;
-    private String name;
     private String email;
     private String password;
 
+    private String firstName;
+    private String lastName;
+
+    //name String 확장
+    public void setName(String name){
+        String[] names = name.split(" ");
+        firstName = names[0];
+        lastName = names[1];
+    }
+
+    public String getName(){
+        return firstName + " " + lastName;
+    }
 }
