@@ -1,9 +1,9 @@
 # Overview
-LS electric 파일럿 프로젝트 demo version 작성, deploy는 Azure App Service.
+Spring boot 기반 RESTful API 파일럿 프로젝트 개발을 위한 스터디용 프로젝트.
 
 # Version
-* Spring boot : 2.4.8 (temp, change to 2.4.2)
-* Maven : 4.0.0 (temp, change to 3.8.1)
+* Spring boot : 2.4.8 (need change to 2.4.2)
+* Maven : 4.0.0 (need change to 3.8.1)
 
 # Goal
 * HATEOAS 사용법 숙지  
