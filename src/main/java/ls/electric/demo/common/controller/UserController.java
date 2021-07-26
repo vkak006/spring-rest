@@ -18,12 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity findAllUser(){
         return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
 
@@ -35,17 +35,17 @@ public class UserController {
         return ResponseEntity.ok().body(new CommonResponse<User>(user));
     }
 
-    @PostMapping()
+    @PostMapping("")
     public void registerUser(User user){
         userService.registerUser(user);
     }
 
-    @PutMapping()
+    @PutMapping("")
     public void modifyUser(String id, String password){
         userService.modifyUser(id, password);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("")
     public void removeUser(String id){
         userService.removeUser(id);
     }
