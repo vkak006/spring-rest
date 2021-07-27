@@ -1,4 +1,4 @@
-package ls.electric.demo.config;
+package ls.electric.demo.config.hateoas;
 
 import ls.electric.demo.common.controller.SampleController;
 import ls.electric.demo.common.domain.Sample;
