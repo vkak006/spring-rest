@@ -18,13 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //1. 회원목록조회
+    //ResponseEntity-----------------------------------------
     @GetMapping("")
     public ResponseEntity findAll(){
         return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
     }
 
-    //2. 회원조회
     @GetMapping("/{id}")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
@@ -37,7 +36,6 @@ public class UserController {
         return ResponseEntity.ok().body(new CommonResponse<User>(user));
     }
 
-    //3. 신규회원
     @PostMapping("")
     public void registerUser(User user){
         userService.registerUser(user);
