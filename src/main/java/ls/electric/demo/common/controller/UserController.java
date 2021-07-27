@@ -18,12 +18,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //1. 회원목록조회
     @GetMapping("")
-    public ResponseEntity findAllUser(){
+    public ResponseEntity findAll(){
         return ResponseEntity.ok().body(new CommonResponse<List<User>>(userService.findAll()));
     }
 
-    @GetMapping("/{id}}")
+    //2. 회원조회
+    @GetMapping("/{id}")
     public ResponseEntity findByUser(String email){
         User user = userService.findByUser(email);
 
@@ -35,17 +37,30 @@ public class UserController {
         return ResponseEntity.ok().body(new CommonResponse<User>(user));
     }
 
+    //3. 신규회원
     @PostMapping("")
     public void registerUser(User user){
         userService.registerUser(user);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity login(){
+        return null;
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(){
+        return null;
+    }
+
+    //기타 CRUD-----------------------------------------
 
     @PutMapping("")
     public void modifyUser(String id, String password){
         userService.modifyUser(id, password);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     public void removeUser(String id){
         userService.removeUser(id);
     }

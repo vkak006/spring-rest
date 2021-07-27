@@ -2,6 +2,7 @@ package ls.electric.demo.common.service;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.mongodb.internal.bulk.InsertRequest;
 import lombok.extern.slf4j.Slf4j;
 import ls.electric.demo.common.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class UserService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public List<User> findAll(){
+        return mongoTemplate.findAll(User.class);
+    }
+
     //select
     public User findByUser(String email){
         return mongoTemplate.findOne(
@@ -29,18 +34,9 @@ public class UserService {
                 User.class);
     }
 
-    public List<User> findAll(){
-        return mongoTemplate.findAll(User.class);
-    }
-
     //insert
     public void registerUser(User user){
-        try{
-            logger.info("mongoTemplate save method");
-            mongoTemplate.save(user);
-        }catch (Exception e){
-            logger.info("mongoTemplate save method " + e.toString());
-        }
+        User result = mongoTemplate.save(user);
     }
 
     //update
