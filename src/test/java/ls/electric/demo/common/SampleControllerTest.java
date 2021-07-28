@@ -9,9 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Map;
-
-
 @RunWith(SpringRunner.class)
 @WebFluxTest(value = SampleController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class SampleControllerTest {
@@ -20,7 +17,11 @@ public class SampleControllerTest {
 
     @Test
     public void sample() throws Exception{
-        this.webTestClient.get().uri("/web-flux")
+        this.webTestClient.get().uri(uriBuilder ->
+                    uriBuilder
+                            .path("/sample")
+                            .queryParam("prefix","test")
+                            .build())
                 .exchange()
                 .expectStatus().isOk();
         }
