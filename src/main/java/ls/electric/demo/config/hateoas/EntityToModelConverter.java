@@ -16,7 +16,7 @@ public class EntityToModelConverter implements RepresentationModelAssembler<Samp
     @Override
     public EntityModel<Sample> toModel(Sample entity) {
         return EntityModel.of(entity,
-                linkTo(methodOn(SampleController.class).test()).withSelfRel());
+                linkTo(methodOn(SampleController.class).test("test")).withSelfRel());
     }
 
     @Override
