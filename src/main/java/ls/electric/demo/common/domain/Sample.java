@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "sample")
 public class Sample extends BaseTimeEntity{
     private String prefix;
