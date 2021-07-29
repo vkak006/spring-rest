@@ -19,8 +19,7 @@ public class SampleController {
 
     @GetMapping("/sample")
     public ResponseEntity test(String prefix){
-        Sample sample = new Sample();
-        sample.setPrefix(prefix);
+        Sample sample = Sample.newInstance(prefix,"");
 
         if(sample.getPrefix() == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
