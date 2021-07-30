@@ -1,9 +1,9 @@
-package ls.electric.demo.common.service;
+package ls.electric.demo.sample.service;
 
 import lombok.RequiredArgsConstructor;
-import ls.electric.demo.common.domain.Sample;
-import ls.electric.demo.common.repository.SampleRepository;
-import ls.electric.demo.common.service.dto.SampleResponse;
+import ls.electric.demo.sample.domain.Sample;
+import ls.electric.demo.sample.repository.SampleRepository;
+import ls.electric.demo.sample.service.dto.SampleResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

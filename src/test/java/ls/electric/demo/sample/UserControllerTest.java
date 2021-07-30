@@ -1,4 +1,4 @@
-package ls.electric.demo.common;
+package ls.electric.demo.sample;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -6,7 +6,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
-@EnableMongoAuditing
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {

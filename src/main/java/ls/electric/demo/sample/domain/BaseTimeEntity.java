@@ -1,4 +1,4 @@
-package ls.electric.demo.common.domain;
+package ls.electric.demo.sample.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,9 +1,9 @@
-package ls.electric.demo.common.service.dto;
+package ls.electric.demo.sample.service.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ls.electric.demo.common.domain.Sample;
+import ls.electric.demo.sample.domain.Sample;
 
 import java.time.LocalDateTime;
 
