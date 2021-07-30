@@ -12,8 +12,8 @@ import reactor.core.publisher.Mono;
 public class SampleService {
     final SampleRepository sampleRepository;
 
-    public Mono<SampleResponse> registerSample(String prefix){
-        Mono<Sample> sampleMono = sampleRepository.save(Sample.newInstance(prefix));
+    public Mono<SampleResponse> registerSample(String title){
+        Mono<Sample> sampleMono = sampleRepository.save(Sample.newInstance(title));
         return sampleMono.flatMap(sample -> Mono.just(SampleResponse.of(sample)));
     }
 }

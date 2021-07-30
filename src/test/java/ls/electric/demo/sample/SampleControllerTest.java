@@ -36,7 +36,7 @@ public class SampleControllerTest {
         //then
         Flux<Sample> sampleFlux = sampleRepository.findAll();
         StepVerifier.create(sampleFlux)
-                .assertNext(sample -> assertThat(sample.getPrefix()).isEqualTo(prefix))
+                .assertNext(sample -> assertThat(sample.getTitle()).isEqualTo(prefix))
                 .verifyComplete();
     }
 

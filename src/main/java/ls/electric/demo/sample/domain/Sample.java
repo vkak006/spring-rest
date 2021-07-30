@@ -6,14 +6,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Document(collection = "sample")
 public class Sample extends BaseTimeEntity{
-    private String id;
-    private String prefix;
 
-    private Sample(String prefix){
-        this.prefix = prefix;
+    private String id;
+    private String title;
+
+    private Sample(String title){
+        this.title = title;
     }
 
-    public static Sample newInstance(String prefix){
-        return new Sample(prefix);
+    public static Sample newInstance(String title){
+        return new Sample(title);
     }
 }

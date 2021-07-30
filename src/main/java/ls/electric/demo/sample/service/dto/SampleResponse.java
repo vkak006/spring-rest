@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 public class SampleResponse {
 
     private final String id;
-    private final String prefix;
+    private final String title;
     private final LocalDateTime createDateTime;
     private final LocalDateTime updateDateTime;
 
     public static SampleResponse of(Sample sample){
-        return new SampleResponse(sample.getId(), sample.getPrefix(), sample.getCreatedDateTime(), sample.getUpdateDateTime());
+        return new SampleResponse(sample.getId(), sample.getTitle(), sample.getCreatedDateTime(), sample.getUpdateDateTime());
     }
 
 }
