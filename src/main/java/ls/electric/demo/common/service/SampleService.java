@@ -1,19 +1,19 @@
 package ls.electric.demo.common.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ls.electric.demo.common.domain.Sample;
 import ls.electric.demo.common.repository.SampleRepository;
+import ls.electric.demo.common.service.dto.SampleResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class SampleService {
-    SampleRepository sampleRepository;
+    final SampleRepository sampleRepository;
 
-    public Mono<Sample> registerSample(String prefix, String name){
-        Mono<Sample> sampleMono = sampleRepository.save(Sample.newInstance(prefix,name));
-        return sampleMono;
+    public Mono<SampleResponse> registerSample(String prefix){
+        Mono<Sample> sampleMono = sampleRepository.save(Sample.newInstance(prefix));
+        return sampleMono.flatMap(sample -> Mono.just(SampleResponse.of(sample)));
     }
 }

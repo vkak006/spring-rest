@@ -2,7 +2,6 @@ package ls.electric.demo.common.service;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.mongodb.internal.bulk.InsertRequest;
 import lombok.extern.slf4j.Slf4j;
 import ls.electric.demo.common.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
