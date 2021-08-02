@@ -1,5 +1,6 @@
 package ls.electric.demo.sample;
 
+import lombok.extern.slf4j.Slf4j;
 import ls.electric.demo.sample.controller.SampleController;
 import ls.electric.demo.sample.domain.Sample;
 import ls.electric.demo.sample.repository.SampleRepository;
@@ -21,12 +22,12 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
 public class SampleControllerTest {
 
     @Autowired
@@ -58,12 +59,9 @@ public class SampleControllerTest {
     public void retrieveSamples(){
         //data
         String title1 = "Junit-test-01";
-        String title2 = "Junit-test-02";
-
         Sample sample1 = Sample.newInstance(title1);
-        Sample sample2 = Sample.newInstance(title2);
 
-        sampleRepository.saveAll(Arrays.asList(sample1,sample2)).subscribe();
+        sampleRepository.save(sample1).subscribe();
 
         //when
         Flux<SampleResponse> sampleResponseFlux = sampleService.retrieveSamples();
@@ -71,7 +69,6 @@ public class SampleControllerTest {
         //then
         StepVerifier.create(sampleResponseFlux)
                 .assertNext(sample -> assertSampleResponse(sample, sample1.getId(), title1))
-                .assertNext(sample -> assertSampleResponse(sample, sample2.getId(), title2))
                 .verifyComplete();
     }
 
