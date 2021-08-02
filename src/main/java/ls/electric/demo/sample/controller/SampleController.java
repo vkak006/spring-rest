@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -16,9 +17,13 @@ public class SampleController {
     @Autowired
     private SampleService sampleService;
 
-
     @PostMapping
-    public Mono<SampleResponse> insertSample(String title){
+    public Mono<SampleResponse> registerSample(String title){
         return sampleService.registerSample(title);
+    }
+
+    @GetMapping
+    public Flux<SampleResponse> retrieveSamples() {
+        return sampleService.retrieveSamples();
     }
 }
