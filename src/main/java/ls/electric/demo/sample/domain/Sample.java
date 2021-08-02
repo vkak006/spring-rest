@@ -10,7 +10,7 @@ public class Sample extends BaseTimeEntity{
     private String id;
     private String title;
 
-    private Sample(String title){
+    public Sample(String title){
         this.title = title;
     }
 
