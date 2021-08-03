@@ -2,6 +2,7 @@ package ls.electric.demo.common.user.controller;
 
 import ls.electric.demo.common.user.domain.User;
 import ls.electric.demo.common.user.service.UserService;
+import ls.electric.demo.common.user.service.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,13 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity retrieveUsers() throws Exception{
-        Flux<User> userFlux = userService.retrieveUsers();
-        return new ResponseEntity<Flux<User>>(userFlux,HttpStatus.OK);
+        Flux<UserResponse> userFlux = userService.retrieveUsers();
+        return new ResponseEntity<Flux<UserResponse>>(userFlux,HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity createUser(String email, String password) throws Exception{
-        Mono<User> userMono = userService.createUsers(email,password);
-        return new ResponseEntity<Mono<User>>(userMono,HttpStatus.OK);
+        Mono<UserResponse> userMono = userService.createUsers(email,password);
+        return new ResponseEntity<Mono<UserResponse>>(userMono,HttpStatus.OK);
     }
 }
