@@ -30,24 +30,24 @@ jobs:
         name: java-app
         path: '${{ github.workspace }}/target/*.war'
 
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: java-app
-
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'ls-electronic-server'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f56ea4fb5eb749ce9a59a76c7539d08f }}
-        package: '*.war'
+#  deploy:
+#    runs-on: windows-latest
+#    needs: build
+#    environment:
+#      name: 'production'
+#      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+#
+#    steps:
+#    - name: Download artifact from build job
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: java-app
+#
+#    - name: Deploy to Azure Web App
+#      id: deploy-to-webapp
+#      uses: azure/webapps-deploy@v2
+#      with:
+#        app-name: 'ls-electronic-server'
+#        slot-name: 'production'
+#        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f56ea4fb5eb749ce9a59a76c7539d08f }}
+#        package: '*.war'
