@@ -16,8 +16,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Mono<User> createUsers(String name, String password){
-        return userRepository.save(User.newInstance(name, password));
+    public Mono<User> createUsers(String email, String password){
+        return userRepository.save(User.newInstance(email, password));
     }
 
 }

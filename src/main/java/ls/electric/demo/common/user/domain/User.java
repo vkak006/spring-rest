@@ -10,15 +10,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User extends BaseTimeEntity {
     private String id;
+    private String email;
     private String name;
     private String password;
 
-    public User(String name, String password){
-        this.name = name;
+    public User(String email, String password){
+        this.email = email;
         this.password = password;
     }
 
-    public static User newInstance(String name, String password){
-        return new User(name, password);
+    public static User newInstance(String email, String password){
+        return new User(email, password);
     }
 }

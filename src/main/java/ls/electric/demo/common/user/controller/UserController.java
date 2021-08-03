@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity createUser(String name, String password) throws Exception{
-        Mono<User> userMono = userService.createUsers(name,password);
+    public ResponseEntity createUser(String email, String password) throws Exception{
+        Mono<User> userMono = userService.createUsers(email,password);
         return new ResponseEntity<Mono<User>>(userMono,HttpStatus.OK);
     }
 }
