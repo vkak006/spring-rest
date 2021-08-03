@@ -23,4 +23,8 @@ public class UserService {
         return userMono.flatMap(user -> Mono.just(UserResponse.of(user)));
     }
 
+    public Mono deleteUser(String id){
+        return userRepository.deleteById(id);
+    }
+
 }
