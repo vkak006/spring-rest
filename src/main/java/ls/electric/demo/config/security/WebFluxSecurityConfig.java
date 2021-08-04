@@ -17,17 +17,17 @@ public class WebFluxSecurityConfig {
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
-                .password(passwordEncoder().encode("test")).roles("USER").build();
+                .password(passwordEncoder().encode("test"))
+                .roles("USER")
+                .build();
         return new MapReactiveUserDetailsService(user);
     }
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
-        http
-                .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
+        http.authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults());
-
         return http.build();
     }
 
