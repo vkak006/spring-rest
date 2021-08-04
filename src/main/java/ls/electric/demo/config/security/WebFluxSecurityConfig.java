@@ -2,8 +2,6 @@ package ls.electric.demo.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
@@ -19,7 +17,7 @@ public class WebFluxSecurityConfig {
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
-                .password("asdas").roles("USER").build();
+                .password(passwordEncoder().encode("test")).roles("USER").build();
         return new MapReactiveUserDetailsService(user);
     }
 
@@ -31,6 +29,11 @@ public class WebFluxSecurityConfig {
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }
