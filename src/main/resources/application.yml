@@ -4,3 +4,5 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+  security:
+    key: test
