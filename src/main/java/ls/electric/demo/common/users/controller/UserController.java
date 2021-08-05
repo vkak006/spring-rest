@@ -1,7 +1,7 @@
-package ls.electric.demo.common.login.controller;
+package ls.electric.demo.common.users.controller;
 
-import ls.electric.demo.common.login.service.LoginService;
-import ls.electric.demo.common.login.service.dto.UserResponse;
+import ls.electric.demo.common.users.service.UserService;
+import ls.electric.demo.common.users.service.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +11,14 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/user")
-public class LoginController {
+public class UserController {
 
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity retrieveUsers() throws Exception{
-        Flux<UserResponse> userFlux = loginService.retrieveUsers();
+        Flux<UserResponse> userFlux = userService.retrieveUsers();
         if(userFlux == null){
             return new ResponseEntity("조회 된 결과가 없습니다.",HttpStatus.NOT_FOUND);
         }
@@ -27,13 +27,13 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity createUser(String email, String password) throws Exception{
-        Mono<UserResponse> userMono = loginService.createUsers(email,password);
+        Mono<UserResponse> userMono = userService.createUsers(email,password);
         return new ResponseEntity<Mono<UserResponse>>(userMono,HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteUser(@PathVariable String id){
-        Mono mono = loginService.deleteUser(id);
+        Mono mono = userService.deleteUser(id);
         if(mono == null){
             return new ResponseEntity("계정을 찾을 수 없습니다.",HttpStatus.NOT_FOUND);
         }
