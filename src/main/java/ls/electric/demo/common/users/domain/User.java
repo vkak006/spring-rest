@@ -1,4 +1,4 @@
-package ls.electric.demo.common.login.domain;
+package ls.electric.demo.common.users.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
