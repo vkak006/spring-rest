@@ -19,23 +19,28 @@ public class PBKDF2Encoder implements PasswordEncoder {
     @Value("${springbootwebfluxjjwt.password.encoder.iteration}")
     private Integer iteration;
 
-    @Value("${springbootwebfluxjjwt.password.encoder.length}")
-    private Integer keyLength;
+    @Value("${springbootwebfluxjjwt.password.encoder.keylength}")
+    private Integer keylength;
 
+    /**
+     * More info (https://www.owasp.org/index.php/Hashing_Java) 404 :(
+     * @param cs password
+     * @return encoded password
+     */
     @Override
     public String encode(CharSequence cs) {
-        try{
+        try {
             byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
-                                            .generateSecret(new PBEKeySpec(cs.toString().toCharArray(), secret.getBytes(), iteration, keyLength))
-                                            .getEncoded();
+                    .generateSecret(new PBEKeySpec(cs.toString().toCharArray(), secret.getBytes(), iteration, keylength))
+                    .getEncoded();
             return Base64.getEncoder().encodeToString(result);
-        }catch(NoSuchAlgorithmException | InvalidKeySpecException ex){
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Override
-    public boolean matches(CharSequence cs, String s) {
-        return encode(cs).equals(s);
+    public boolean matches(CharSequence cs, String string) {
+        return encode(cs).equals(string);
     }
 }

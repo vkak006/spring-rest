@@ -5,6 +5,7 @@ import ls.electric.demo.config.security.jwt.SecurityContextRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -27,44 +28,42 @@ public class WebFluxSecurityConfig {
     private SecurityContextRepository securityContextRepository;
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
-        http
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
                 .exceptionHandling()
-                .authenticationEntryPoint((swe, e)->
-                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)))
-                .accessDeniedHandler((swe, e)->
-                        Mono.fromRunnable(()-> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
-                .and()
+                .authenticationEntryPoint((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))
+                ).accessDeniedHandler((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN))
+                ).and()
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers("/swagger-ui").hasAnyRole("USER", "ADMIN")
-                .pathMatchers("/login").permitAll()
-                .anyExchange()
-                .authenticated()
-                .and();
-        return http.build();
+                .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                .pathMatchers("/api/login").permitAll()
+                .anyExchange().authenticated()
+                .and().build();
     }
 
-    @Bean
-    public MapReactiveUserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("test"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("test"))
-                .roles("ADMIN")
-                .build();
-
-        return new MapReactiveUserDetailsService(user,admin);
-    }
+//    @Bean
+//    public MapReactiveUserDetailsService userDetailsService() {
+//        UserDetails user = User
+//                .withUsername("user")
+//                .password(passwordEncoder().encode("test"))
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails admin = User
+//                .withUsername("admin")
+//                .password(passwordEncoder().encode("test"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new MapReactiveUserDetailsService(user,admin);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){

@@ -21,8 +21,8 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String email;
     private String username;
     private String password;
-    private Boolean enabled;
 
+    private Boolean enabled;
     private List<Role> roles;
 
 
@@ -56,13 +56,14 @@ public class User extends BaseTimeEntity implements UserDetails {
         return false;
     }
 
-    public User(String username, String password,List<Role> roles){
+    public User(String username, String password,Boolean enabled,List<Role> roles){
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
         this.roles = roles;
     }
 
-    public static User newInstance(String username, String password, List<Role> roles){
-        return new User(username, password, roles);
+    public static User newInstance(String username, String password,Boolean enabled, List<Role> roles){
+        return new User(username, password, enabled, roles);
     }
 }
