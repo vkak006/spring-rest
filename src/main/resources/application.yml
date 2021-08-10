@@ -1,6 +1,48 @@
 spring:
-  server:
-    port: 8001
+  profiles:
+    active: local
+
+---
+
+spring:
+  profiles:
+    active: dev
   data:
     mongodb:
       uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+  devtools:
+    livereload:
+      enabled: true
+
+springbootwebfluxjjwt:
+  password:
+    encoder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
+
+server:
+  port: 8080
+
+---
+
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+springbootwebfluxjjwt:
+  password:
+    encoder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
+
+server:
+  port: 8088
