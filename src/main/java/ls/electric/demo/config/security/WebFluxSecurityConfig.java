@@ -32,36 +32,37 @@ public class WebFluxSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http.httpBasic().disable()
-                .formLogin().disable()
-                .csrf().disable()
-                .logout().disable();
-
-        http.exceptionHandling()
+        return http
+                .exceptionHandling()
                 .authenticationEntryPoint((swe, e) ->
-                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)))
-                .accessDeniedHandler((swe, e) ->
-                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)));
-
-        http.authorizeExchange()
-                .pathMatchers("/swagger-ui","/api/user").permitAll()
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))
+                ).accessDeniedHandler((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN))
+                ).and()
+                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .authenticationManager(authenticationManager)
+                .securityContextRepository(securityContextRepository)
+                .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers(HttpMethod.GET).permitAll()
-                .anyExchange().authenticated();
-
-        return http.build();
+                .pathMatchers("/swagger-ui").permitAll()
+                .pathMatchers("/api/login").permitAll()
+                .anyExchange().authenticated()
+                .and().build();
     }
 
-    @Bean
-    public MapReactiveUserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("test"))
-                .roles("USER")
-                .build();
-
-        return new MapReactiveUserDetailsService(user);
-    }
+//    @Bean
+//    public MapReactiveUserDetailsService userDetailsService() {
+//        UserDetails user = User
+//                .withUsername("user")
+//                .password(passwordEncoder().encode("test"))
+//                .roles("USER")
+//                .build();
+//
+//        return new MapReactiveUserDetailsService(user);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
