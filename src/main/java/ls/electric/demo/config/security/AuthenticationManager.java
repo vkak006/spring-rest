@@ -21,9 +21,6 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
     private JWTUtil jwtUtil;
 
-    @Autowired
-    private AuthenticationService authenticationService;
-
     @Override
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
