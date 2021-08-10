@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public Mono<UserResponse> createUsers(String email, String password){
-        Mono<User> userMono = userRepository.save(User.newInstance(email, password,true, Arrays.asList(Role.USER)));
+        Mono<User> userMono = userRepository.save(User.newInstance(email, password,true, Arrays.asList(Role.ROLE_USER)));
         return userMono.flatMap(user -> Mono.just(UserResponse.of(user)));
     }
 

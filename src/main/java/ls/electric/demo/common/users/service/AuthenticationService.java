@@ -19,8 +19,8 @@ public class AuthenticationService {
     public void init(){
         data = new HashMap<>();
 
-        data.put("user", User.newInstance("user","cBrlgyL2GI2GINuLUUwgojITuIufFycpLG4490dhGtY=", true, Arrays.asList(Role.USER)));
-        data.put("admin", User.newInstance("admin", "dQNjUIMorJb8Ubj2+wVGYp6eAeYkdekqAcnYp+aRq5w=", true, Arrays.asList(Role.ADMIN)));
+        data.put("user", User.newInstance("user","cBrlgyL2GI2GINuLUUwgojITuIufFycpLG4490dhGtY=", true, Arrays.asList(Role.ROLE_USER)));
+        data.put("admin", User.newInstance("admin", "dQNjUIMorJb8Ubj2+wVGYp6eAeYkdekqAcnYp+aRq5w=", true, Arrays.asList(Role.ROLE_ADMIN)));
     }
 
     public Mono<User> findByUsername(String username){

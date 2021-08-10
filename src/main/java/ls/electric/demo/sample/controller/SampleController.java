@@ -25,11 +25,13 @@ public class SampleController {
     private SampleService sampleService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public Mono<SampleResponse> registerSample(String title){
         return sampleService.registerSample(title);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public Flux<SampleResponse> retrieveSamples() {
         return sampleService.retrieveSamples();
     }
