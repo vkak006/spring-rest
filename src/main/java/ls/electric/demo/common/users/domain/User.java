@@ -2,7 +2,7 @@ package ls.electric.demo.common.users.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ls.electric.demo.config.security.Role;
+import ls.electric.demo.config.security.role.Role;
 import ls.electric.demo.sample.domain.BaseTimeEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;

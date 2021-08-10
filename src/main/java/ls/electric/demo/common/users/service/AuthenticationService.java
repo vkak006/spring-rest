@@ -1,7 +1,7 @@
 package ls.electric.demo.common.users.service;
 
 import ls.electric.demo.common.users.domain.User;
-import ls.electric.demo.config.security.Role;
+import ls.electric.demo.config.security.role.Role;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
