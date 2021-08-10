@@ -32,24 +32,35 @@ public class WebFluxSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http
-                .exceptionHandling()
-                .authenticationEntryPoint((swe, e) ->
-                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))
-                ).accessDeniedHandler((swe, e) ->
-                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN))
-                ).and()
+        http.httpBasic().disable()
+                .formLogin().disable()
                 .csrf().disable()
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
-                .authenticationManager(authenticationManager)
-                .securityContextRepository(securityContextRepository)
-                .authorizeExchange()
+                .logout().disable();
+
+        http.exceptionHandling()
+                .authenticationEntryPoint((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)))
+                .accessDeniedHandler((swe, e) ->
+                        Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)));
+
+        http.authorizeExchange()
+                .pathMatchers("/swagger-ui","/api/user").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/api/login").permitAll()
-                .pathMatchers("/swagger-ui").permitAll()
-                .anyExchange().authenticated()
-                .and().build();
+                .pathMatchers(HttpMethod.GET).permitAll()
+                .anyExchange().authenticated();
+
+        return http.build();
+    }
+
+    @Bean
+    public MapReactiveUserDetailsService userDetailsService() {
+        UserDetails user = User
+                .withUsername("user")
+                .password(passwordEncoder().encode("test"))
+                .roles("USER")
+                .build();
+
+        return new MapReactiveUserDetailsService(user);
     }
 
     @Bean

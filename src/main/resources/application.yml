@@ -6,7 +6,7 @@ spring:
 springbootwebfluxjjwt:
   password:
     encoder:
-      secret: secret
+      secret: mysecret
       iteration: 33
       keylength: 256
   jjwt:
