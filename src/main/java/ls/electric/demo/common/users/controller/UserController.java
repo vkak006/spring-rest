@@ -9,12 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/test")
+    public Map<String,Object> test(){
+        return new HashMap<>();
+    }
 
     @GetMapping
     public ResponseEntity retrieveUsers() throws Exception{

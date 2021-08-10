@@ -1,6 +1,15 @@
 spring:
-  server:
-    port: 8001
   data:
     mongodb:
       uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+springbootwebfluxjjwt:
+  password:
+    encoder:
+      secret: mysecret
+      iteration: 33
+      keylength: 256
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
+
