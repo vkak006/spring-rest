@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
 @Document(collection = "user")
 public class User extends BaseTimeEntity implements UserDetails {
     private String id;
@@ -56,14 +55,15 @@ public class User extends BaseTimeEntity implements UserDetails {
         return false;
     }
 
-    public User(String username, String password,Boolean enabled,List<Role> roles){
+    public User(String email, String username, String password,Boolean enabled,List<Role> roles){
+        this.email = email;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
     }
 
-    public static User newInstance(String username, String password,Boolean enabled, List<Role> roles){
-        return new User(username, password, enabled, roles);
+    public static User newInstance(String email, String username, String password,Boolean enabled, List<Role> roles){
+        return new User(email, username, password, enabled, roles);
     }
 }

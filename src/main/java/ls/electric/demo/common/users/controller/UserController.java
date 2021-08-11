@@ -19,14 +19,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/test")
-    public Map<String,Object> test(){
-        return new HashMap<>();
-    }
-
     @GetMapping
-    public ResponseEntity retrieveUsers() throws Exception{
-        Flux<UserResponse> userFlux = userService.retrieveUsers();
+    public ResponseEntity findAll() throws Exception{
+        Flux<UserResponse> userFlux = userService.findAll();
         if(userFlux == null){
             return new ResponseEntity("조회 된 결과가 없습니다.",HttpStatus.NOT_FOUND);
         }
@@ -34,9 +29,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity createUser(String email, String password) throws Exception{
-        Mono<UserResponse> userMono = userService.createUsers(email,password);
-        return new ResponseEntity<Mono<UserResponse>>(userMono,HttpStatus.OK);
+    public ResponseEntity createUser(String email, String username, String password) throws Exception{
+        Mono<UserResponse> userMono = userService.createUsers(email,username,password);
+        return new ResponseEntity<Mono<UserResponse>>(userMono,HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")

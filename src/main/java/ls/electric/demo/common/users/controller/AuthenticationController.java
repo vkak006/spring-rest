@@ -3,6 +3,7 @@ package ls.electric.demo.common.users.controller;
 import lombok.extern.slf4j.Slf4j;
 import ls.electric.demo.common.users.domain.User;
 import ls.electric.demo.common.users.service.AuthenticationService;
+import ls.electric.demo.common.users.service.UserService;
 import ls.electric.demo.common.users.service.dto.AuthRequest;
 import ls.electric.demo.common.users.service.dto.AuthResponse;
 import ls.electric.demo.config.security.PBKDF2Encoder;
@@ -29,10 +30,13 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/api/login")
     public Mono<ResponseEntity<AuthResponse>> login(@RequestBody AuthRequest authRequest){
-        log.info(passwordEncoder.encode(authRequest.getPassword()));
-        return authenticationService.findByUsername(authRequest.getUsername())
+
+        return userService.findByEmail(authRequest.getEmail())
                 .filter(userDetails -> passwordEncoder.encode(authRequest.getPassword()).equals(userDetails.getPassword()))
                 .map(userDetails -> ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails))))
                 .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));

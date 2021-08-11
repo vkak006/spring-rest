@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserResponse {
     private final String email;
+    private final String username;
     private final String password;
     private final LocalDateTime createDateTime;
     private final LocalDateTime updateDateTime;
 
     public static UserResponse of(User user){
-        return new UserResponse(user.getEmail(),user.getPassword(),user.getCreatedDateTime(),user.getUpdateDateTime());
+        return new UserResponse(user.getEmail(),user.getUsername(),user.getPassword(),user.getCreatedDateTime(),user.getUpdateDateTime());
     }
 
 }
