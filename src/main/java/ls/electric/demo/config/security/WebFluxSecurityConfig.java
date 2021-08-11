@@ -47,22 +47,12 @@ public class WebFluxSecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers(HttpMethod.GET).permitAll()
+                .pathMatchers(HttpMethod.POST).permitAll()
                 .pathMatchers("/swagger-ui").permitAll()
                 .pathMatchers("/api/login").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }
-
-//    @Bean
-//    public MapReactiveUserDetailsService userDetailsService() {
-//        UserDetails user = User
-//                .withUsername("user")
-//                .password(passwordEncoder().encode("test"))
-//                .roles("USER")
-//                .build();
-//
-//        return new MapReactiveUserDetailsService(user);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
