@@ -47,6 +47,7 @@ public class WebFluxSecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers(HttpMethod.GET).permitAll()
+                .pathMatchers(HttpMethod.POST).permitAll()
                 .pathMatchers("/swagger-ui").permitAll()
                 .pathMatchers("/api/login").permitAll()
                 .anyExchange().authenticated()
