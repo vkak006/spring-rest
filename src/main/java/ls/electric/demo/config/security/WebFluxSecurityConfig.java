@@ -54,17 +54,6 @@ public class WebFluxSecurityConfig {
                 .and().build();
     }
 
-//    @Bean
-//    public MapReactiveUserDetailsService userDetailsService() {
-//        UserDetails user = User
-//                .withUsername("user")
-//                .password(passwordEncoder().encode("test"))
-//                .roles("USER")
-//                .build();
-//
-//        return new MapReactiveUserDetailsService(user);
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
