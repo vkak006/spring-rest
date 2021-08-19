@@ -24,6 +24,15 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 public class WebFluxSecurityConfig {
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/swagger-ui/",
+            "/swagger-ui/**",
+            "/v2/api-docs"
+    };
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -46,9 +55,7 @@ public class WebFluxSecurityConfig {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers(HttpMethod.GET).permitAll()
-                .pathMatchers(HttpMethod.POST).permitAll()
-                .pathMatchers("/swagger-ui").permitAll()
+                .pathMatchers(AUTH_WHITELIST).permitAll()
                 .pathMatchers("/api/login").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
