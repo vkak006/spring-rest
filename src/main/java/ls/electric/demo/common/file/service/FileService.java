@@ -5,6 +5,7 @@ import ls.electric.demo.common.file.domain.Image;
 import ls.electric.demo.common.file.repository.FileRepository;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -38,8 +39,28 @@ public class FileService {
                 .then();
     }
 
+    public Mono<Void> uploadFiles(Flux<FilePart> filePartFlux){
+        return filePartFlux
+                .flatMap(file -> {
+                    Mono<Image> saveImageData = fileRepository.save(Image.newInstance(file.filename(),basePath.toString()));
+                    Mono<Void> copyImageData = Mono.just(Paths.get(basePath.toString(), file.filename())
+                            .toFile())
+                            .map(destFile -> {
+                                try{
+                                    destFile.createNewFile();
+                                    return destFile;
+                                }catch (IOException e){
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                            .flatMap(file::transferTo);
+                    return Mono.when(saveImageData, copyImageData);
+                })
+                .then();
+    }
+
     public Mono<Void> deleteFile(String fileName){
-        Mono<Void> deleteImageData = fileRepository.deleteByOriginalFileName(fileName);
+        Mono<Void> deleteImageData = fileRepository.deleteByOrigFileName(fileName);
         Mono<Void> deleteFile = Mono.fromRunnable(() -> {
            try{
                Files.deleteIfExists(Paths.get(basePath.toString(),fileName));

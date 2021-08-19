@@ -5,5 +5,5 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface FileRepository extends ReactiveCrudRepository<Image,String> {
-    Mono<Void> deleteByOriginalFileName(String fileName);
+    Mono<Void> deleteByOrigFileName(String fileName);
 }

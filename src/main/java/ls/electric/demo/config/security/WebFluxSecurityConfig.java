@@ -57,6 +57,7 @@ public class WebFluxSecurityConfig {
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers(AUTH_WHITELIST).permitAll()
                 .pathMatchers("/api/login").permitAll()
+                .pathMatchers("/api/file/**").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }
