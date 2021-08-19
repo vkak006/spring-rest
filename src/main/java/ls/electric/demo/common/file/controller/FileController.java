@@ -33,10 +33,6 @@ public class FileController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> upload(@RequestPart("file") Mono<FilePart> filePartMono){
         return fileService.uploadFile(filePartMono);
-//        return filePartMono
-//            .doOnNext(file -> System.out.println("Received File : " + file.filename()))
-//            .flatMap(file -> file.transferTo(basePath.resolve(file.filename())))
-//            .then();
     }
 
     @DeleteMapping("/single")
@@ -45,10 +41,11 @@ public class FileController {
     }
 
     @PostMapping("/multi")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Void> upload(@RequestPart("file") Flux<FilePart> filePartFlux){
-        return filePartFlux
-                .flatMap(file-> file.transferTo(basePath.resolve(file.filename())))
-                .then();
+    public Mono<Void> upload(@RequestPart("files") Flux<FilePart> filePartFlux){
+        return fileService.uploadFiles(filePartFlux);
+//        return  filePartFlux
+//                .doOnNext(fp -> System.out.println(fp.filename()))
+//                .flatMap(fp -> fp.transferTo(basePath.resolve(fp.filename())))
+//                .then();
     }
 }
