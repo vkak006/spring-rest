@@ -56,4 +56,9 @@ public class FileService {
 
         return Mono.when(deleteImageData,deleteFile).then();
     }
+
+    public Mono<String> readLocalFile(String fileName){
+        return fileRepository.findByTempFileName(fileName)
+                .flatMap(file -> Mono.just(Paths.get(file.getFilePath()).toString()));
+    }
 }
