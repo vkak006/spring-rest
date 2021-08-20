@@ -2,6 +2,7 @@ package ls.electric.demo.common.file.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Data
 @Document(collection = "image")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Image {
 
     @Transient
