@@ -17,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class FileService {
-    private final Path basePath = Paths.get("./src/main/resources/upload/");
+    private final Path basePath = Paths.get("./src/main/resources/static/img/");
     private final FileRepository fileRepository;
 
     public Mono<Void> uploadFile(Mono<FilePart> filePartMono){
