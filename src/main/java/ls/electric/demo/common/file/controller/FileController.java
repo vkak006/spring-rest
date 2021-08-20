@@ -42,7 +42,7 @@ public class FileController {
 
     @PostMapping("/multi")
     public Mono<Void> upload(@RequestPart("files") Flux<FilePart> filePartFlux){
-        return fileService.uploadFiles(filePartFlux);
+        return fileService.uploadFile(filePartFlux);
 //        return  filePartFlux
 //                .doOnNext(fp -> System.out.println(fp.filename()))
 //                .flatMap(fp -> fp.transferTo(basePath.resolve(fp.filename())))

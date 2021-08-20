@@ -38,8 +38,7 @@ public class FileService {
                 })
                 .then();
     }
-
-    public Mono<Void> uploadFiles(Flux<FilePart> filePartFlux){
+    public Mono<Void> uploadFile(Flux<FilePart> filePartFlux){
         return filePartFlux
                 .flatMap(file -> {
                     Mono<Image> saveImageData = fileRepository.save(Image.newInstance(file.filename(),basePath.toString()));
