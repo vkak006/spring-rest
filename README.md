@@ -8,7 +8,7 @@ Spring boot 기반 RESTful API 파일럿 프로젝트 개발을 위한 스터디
 * Swagger : 3.0.0
 
 # CI/CD
-> 💬 NAS 서버 구축 시 gitlab으로 코드 이관 후, gitlab + jenkins + Azure App Service 사용예정
+> 💬 gitlab + jenkins + Azure App Service 사용예정
 * github action
 
 # Tech Stach
