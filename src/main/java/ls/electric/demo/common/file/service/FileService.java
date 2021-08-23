@@ -12,55 +12,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class FileService {
-    private final Path basePath = Paths.get("./src/main/resources/upload/");
+    private final Path basePath = Paths.get("./src/main/resources/static/img/");
     private final FileRepository fileRepository;
 
     public Mono<Void> uploadFile(Mono<FilePart> filePartMono){
         return filePartMono
                 .flatMap(file -> {
-                    Mono<Image> saveImageData = fileRepository.save(Image.newInstance(file.filename(),basePath.toString()));
-                    Mono<Void> copyImageData = Mono.just(Paths.get(basePath.toString(), file.filename())
+                    Image image = Image.newInstance(file.filename(),basePath.toString());
+                    Mono<Image> saveFileData = fileRepository.save(image);
+                    Mono<Void> copyFileObj = Mono.just(Paths.get(basePath.toString(), image.getTempFileName())
                             .toFile())
-                            .map(destFile -> {
-                                try{
-                                    destFile.createNewFile();
-                                    return destFile;
-                                }catch (IOException e){
-                                    throw new RuntimeException(e);
-                                }
-                            })
                             .flatMap(file::transferTo);
-                    return Mono.when(saveImageData, copyImageData);
+                    return Mono.when(saveFileData, copyFileObj);
                 })
                 .then();
     }
-
-    public Mono<Void> uploadFiles(Flux<FilePart> filePartFlux){
+    public Mono<Void> uploadFile(Flux<FilePart> filePartFlux){
         return filePartFlux
                 .flatMap(file -> {
-                    Mono<Image> saveImageData = fileRepository.save(Image.newInstance(file.filename(),basePath.toString()));
-                    Mono<Void> copyImageData = Mono.just(Paths.get(basePath.toString(), file.filename())
+                    Mono<Image> saveFileData = fileRepository.save(Image.newInstance(file.filename(),basePath.toString()));
+                    Mono<Void> copyFileObj = Mono.just(Paths.get(basePath.toString(), file.filename())
                             .toFile())
-                            .map(destFile -> {
-                                try{
-                                    destFile.createNewFile();
-                                    return destFile;
-                                }catch (IOException e){
-                                    throw new RuntimeException(e);
-                                }
-                            })
                             .flatMap(file::transferTo);
-                    return Mono.when(saveImageData, copyImageData);
+                    return Mono.when(saveFileData, copyFileObj);
                 })
                 .then();
     }
 
     public Mono<Void> deleteFile(String fileName){
-        Mono<Void> deleteImageData = fileRepository.deleteByOrigFileName(fileName);
+        Mono<Void> deleteImageData = fileRepository.deleteByTempFileName(fileName);
         Mono<Void> deleteFile = Mono.fromRunnable(() -> {
            try{
                Files.deleteIfExists(Paths.get(basePath.toString(),fileName));
@@ -70,5 +55,10 @@ public class FileService {
         });
 
         return Mono.when(deleteImageData,deleteFile).then();
+    }
+
+    public Mono<String> readLocalFile(String fileName){
+        return fileRepository.findByTempFileName(fileName)
+                .flatMap(file -> Mono.just(Paths.get(file.getFilePath()).toString()));
     }
 }

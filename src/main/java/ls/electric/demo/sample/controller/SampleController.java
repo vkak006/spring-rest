@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -23,6 +24,9 @@ public class SampleController {
 
     @Autowired
     private SampleService sampleService;
+
+    @Autowired
+    private WebClient webClient;
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
@@ -46,5 +50,13 @@ public class SampleController {
     @PreAuthorize("hasRole('ADMIN')")
     public Mono<ResponseEntity<Message>> admin(){
         return Mono.just(ResponseEntity.ok(new Message("Content for admin")));
+    }
+
+    @GetMapping("/webClient/test")
+    public Mono<String> test(String fileName){
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/file/{fileName}").build(fileName))
+                .retrieve()
+                .bodyToMono(String.class);
     }
 }
