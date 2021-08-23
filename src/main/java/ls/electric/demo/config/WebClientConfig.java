@@ -1,4 +1,4 @@
-package ls.electric.demo.config.webClient;
+package ls.electric.demo.config;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
