@@ -7,6 +7,8 @@ spring:
 spring:
   profiles:
     active: dev
+  resources:
+    static-locations: classpath:/static/
   data:
     mongodb:
 #      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -15,7 +17,6 @@ spring:
   servlet:
     multipart:
       file-size-threshold: 1MB
-      location: D:\Temp\
       max-file-size: 100MB
       max-request-size: 100MB
   devtools:
@@ -35,22 +36,13 @@ springbootwebfluxjjwt:
 server:
   port: 8080
 
+resource:
+  location: D:/Temp/
+  uri_path: /img
+
+
 ---
 
 spring:
-  profiles: prod
-  data:
-    mongodb:
-      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-springbootwebfluxjjwt:
-  password:
-    encoder:
-      secret: mysecret
-      iteration: 33
-      keylength: 256
-  jjwt:
-    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
-    expiration: 28800
-
-server:
-  port: 8088
+  profiles:
+    active: prod

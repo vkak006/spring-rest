@@ -41,7 +41,7 @@ public class FileController {
     }
 
     @GetMapping("/{fileName}")
-    public Mono<String> readLocalFile(@PathVariable("fileName") String fileName){
-        return fileService.readLocalFile(fileName);
+    public Mono<String> getFilePath(@PathVariable("fileName") String fileName){
+        return fileService.selectFilePath(fileName);
     }
 }
