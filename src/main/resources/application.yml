@@ -9,7 +9,9 @@ spring:
     active: dev
   data:
     mongodb:
-      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+#      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+      uri: mongodb://localhost:27017
+      database: lsDemo
   servlet:
     multipart:
       file-size-threshold: 1MB
