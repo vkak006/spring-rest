@@ -11,7 +11,6 @@ spring:
     static-locations: classpath:/static/
   data:
     mongodb:
-#      uri: mongodb+srv://ban:dlgksqja2@bancluster.epqra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
       uri: mongodb://localhost:27017
       database: lsDemo
   servlet:
@@ -40,6 +39,11 @@ resource:
   location: D:/Temp/
   uri_path: /img
 
+google:
+  map:
+    api:
+      endpoint: https://maps.googleapis.com/maps/api/geocode/json?
+      key: AIzaSyCHAwUClWx7mNOxFrd-jCMzEpNpft4DVVQ
 
 ---
 
