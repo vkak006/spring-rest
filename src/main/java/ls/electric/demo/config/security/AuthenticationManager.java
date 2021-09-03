@@ -2,9 +2,7 @@ package ls.electric.demo.config.security;
 
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
-import ls.electric.demo.common.users.service.AuthenticationService;
 import ls.electric.demo.config.security.jwt.JWTUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
