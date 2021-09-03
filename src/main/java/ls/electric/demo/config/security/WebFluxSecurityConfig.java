@@ -25,7 +25,8 @@ public class WebFluxSecurityConfig {
             "/swagger-ui/**",
             "/v2/api-docs",
             "/api/file/**",
-            "/api/user/**"
+            "/api/user/**",
+            "/api/auth/**"
     };
 
     @Autowired
@@ -51,8 +52,6 @@ public class WebFluxSecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers(AUTH_WHITELIST).permitAll()
-                .pathMatchers("/api/login").permitAll()
-                .pathMatchers("/api/hello").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }
