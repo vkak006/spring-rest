@@ -1,6 +1,7 @@
 package ls.electric.demo.component.sample.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import ls.electric.demo.component.sample.domain.Sample;
 import ls.electric.demo.component.users.domain.Message;
 import ls.electric.demo.component.sample.service.SampleService;
 import ls.electric.demo.component.sample.service.dto.SampleResponse;
@@ -56,5 +57,10 @@ public class SampleController {
                 .uri(uriBuilder -> uriBuilder.path("/api/file/{fileName}").build(fileName))
                 .retrieve()
                 .bodyToMono(String.class);
+    }
+
+    @GetMapping("/mongo/test")
+    public Flux<Sample> aggregateTest(){
+        return sampleService.getSampleData();
     }
 }
