@@ -34,7 +34,34 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    //Token 발급
+    /**
+     * RefreshToken 발급
+     * @param id
+     * @return AuthResponse
+     */
+    @PostMapping("/token/refresh")
+    public Mono<ResponseEntity<AuthResponse>> refreshToken(String id){
+        return null;
+    }
+
+    /**
+     * 유효 Token 요청
+     * @param authRequest
+     * @return AuthResponse
+     */
+    @GetMapping("/token")
+    public Mono<ResponseEntity<AuthResponse>> getToken(@RequestBody AuthRequest authRequest){
+        return userService.findByEmail(authRequest.getEmail())
+                .filter(userDetails -> passwordEncoder.encode(authRequest.getPassword()).equals(userDetails.getPassword()))
+                .map(userDetails -> ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails))))
+                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
+    }
+
+    /**
+     * 로그인
+     * @param authRequest
+     * @return AuthResponse
+     */
     @PostMapping("/login")
     public Mono<ResponseEntity<AuthResponse>> login(@RequestBody AuthRequest authRequest){
         return userService.findByEmail(authRequest.getEmail())
@@ -43,10 +70,10 @@ public class AuthenticationController {
                 .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @ApiResponses({ @ApiResponse(code = 204, message = "success")})
-    @GetMapping("/logout")
-    public Mono<String> logout(ServerHttpRequest request){
-        return authenticationService.logout(request);
-    }
+//    @PreAuthorize("hasRole('USER')")
+//    @ApiResponses({ @ApiResponse(code = 204, message = "success")})
+//    @GetMapping("/logout")
+//    public Mono<String> logout(ServerHttpRequest request){
+//        return authenticationService.logout(request);
+//    }
 }
