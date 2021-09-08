@@ -5,6 +5,7 @@ import ls.electric.demo.component.users.domain.User;
 import ls.electric.demo.component.users.repository.UserRepository;
 import ls.electric.demo.component.users.service.dto.UserResponse;
 import ls.electric.demo.config.security.PBKDF2Encoder;
+import ls.electric.demo.config.security.jwt.AesUtil;
 import ls.electric.demo.config.security.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class UserService {
     final UserRepository userRepository;
 
     @Autowired
+    private AesUtil aesUtil;
+
+    @Autowired
     private PBKDF2Encoder passwordEncoder;
 
     public Flux<UserResponse> findAll(){
@@ -30,9 +34,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Mono<UserResponse> createUsers(String email, String username, String password){
+    public Mono<UserResponse> createUsers(String email, String username, String password) throws Exception{
         return userRepository
-                .save(User.newInstance(email, username, passwordEncoder.encode(password),true, Arrays.asList(Role.ROLE_USER)))
+                .save(User.newInstance(email, username, aesUtil.encrypt(password),true, Arrays.asList(Role.ROLE_USER)))
                 .flatMap(user -> Mono.just(UserResponse.of(user)));
     }
 
