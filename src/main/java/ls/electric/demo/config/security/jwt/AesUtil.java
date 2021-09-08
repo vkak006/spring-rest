@@ -2,6 +2,7 @@ package ls.electric.demo.config.security.jwt;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -12,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
+@Component
 public class AesUtil {
     // AES-128 (128bit)
     private static final int keySize = 128; //128bit

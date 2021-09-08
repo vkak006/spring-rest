@@ -8,6 +8,7 @@ import ls.electric.demo.component.users.service.UserService;
 import ls.electric.demo.component.users.service.dto.AuthRequest;
 import ls.electric.demo.component.users.service.dto.AuthResponse;
 import ls.electric.demo.config.security.PBKDF2Encoder;
+import ls.electric.demo.config.security.jwt.AesUtil;
 import ls.electric.demo.config.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,13 +30,17 @@ public class AuthenticationController {
     private JWTUtil jwtUtil;
 
     @Autowired
-    private PBKDF2Encoder passwordEncoder;
+    private AesUtil aesUtil;
 
     @Autowired
     private AuthenticationService authenticationService;
 
     @Autowired
     private UserService userService;
+
+    //AES-128 방식을 사용하는 경우, 삭제필요.
+    @Autowired
+    private PBKDF2Encoder passwordEncoder;
 
     /**
      * RefreshToken 발급
@@ -58,14 +66,21 @@ public class AuthenticationController {
     }
 
     /**
-     * 로그인
+     * 로그인 (Base64 -> AES-128)
      * @param authRequest
      * @return AuthResponse
      */
     @PostMapping("/login")
     public Mono<ResponseEntity<AuthResponse>> login(@RequestBody AuthRequest authRequest){
         return userService.findByEmail(authRequest.getEmail())
-                .filter(userDetails -> passwordEncoder.encode(authRequest.getPassword()).equals(userDetails.getPassword()))
+                .filter(userDetails -> {
+                    try {
+                        return authRequest.getPassword().equals(aesUtil.decrypt(userDetails.getPassword()));
+                    } catch (Exception e) {
+                        log.error("AES-128 decrypt ERROR : ", e);
+                        throw new IllegalStateException(e);
+                    }
+                })
                 .map(userDetails -> ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails))))
                 .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
     }
