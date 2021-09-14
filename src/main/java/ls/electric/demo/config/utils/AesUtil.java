@@ -1,4 +1,4 @@
-package ls.electric.demo.config.security.jwt;
+package ls.electric.demo.config.utils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;

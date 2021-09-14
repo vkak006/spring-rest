@@ -1,4 +1,4 @@
-package ls.electric.demo.config.security.jwt;
+package ls.electric.demo.config.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

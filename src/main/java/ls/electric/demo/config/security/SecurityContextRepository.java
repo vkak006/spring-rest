@@ -1,4 +1,4 @@
-package ls.electric.demo.config.security.jwt;
+package ls.electric.demo.config.security;
 
 import lombok.AllArgsConstructor;
 import ls.electric.demo.config.security.AuthenticationManager;
