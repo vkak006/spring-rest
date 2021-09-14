@@ -1,11 +1,5 @@
 spring:
   profiles:
-    active: local
-
----
-
-spring:
-  profiles:
     active: dev
   resources:
     static-locations: classpath:/static/
@@ -39,10 +33,3 @@ server:
 resource:
   location: D:/Temp/
   uri_path: /img
-
-
----
-
-spring:
-  profiles:
-    active: prod
